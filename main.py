@@ -1,6 +1,8 @@
 import copy
 from sudoku_generator import SudokuGenerator, generate_sudoku
+
 # setting up pygame
+
 import pygame
 
 background_color = (251, 247, 245)
@@ -107,3 +109,4 @@ def draw_board(screen, sudoku, solved, original):
     exit_surface = pygame.Surface((exit_button.get_size()[0] + 15, exit_button.get_size()[1] + 15))
     exit_surface.fill(LINE_COLOR)
     exit_surface.blit(exit_button, (10, 10))
+
