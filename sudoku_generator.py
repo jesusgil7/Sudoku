@@ -3,9 +3,6 @@ import math, random
 """
 This was adapted from a GeeksforGeeks article "Program for Sudoku Generator" by Aarti_Rathi and Ankur Trisal
 https://www.geeksforgeeks.org/program-sudoku-generator/
-
-
-
 """
 
 
@@ -29,6 +26,8 @@ class SudokuGenerator:
     def __init__(self, row_length, removed_cells):
         self.row_length = row_length
         self.removed_cells = removed_cells
+
+        # Create a list 9x9
         self.board = [[0 for x in range(row_length)] for x in range(row_length)]
         self.box_length = int(math.sqrt(row_length))
 
@@ -51,6 +50,7 @@ class SudokuGenerator:
     '''
 
     def print_board(self):
+        #Print the list, displaying the sudoku
         for row in self.board:
             for col in row:
                 print(col, end=" ")
@@ -87,6 +87,7 @@ class SudokuGenerator:
     '''
 
     def valid_in_col(self, col, num):
+        # Go to every number within the column
         for x in range(9):
             if self.board[x][col] == num:
                 return False
@@ -106,6 +107,21 @@ class SudokuGenerator:
     '''
 
     def valid_in_box(self, row_start, col_start, num):
+        # Set the row_start and col_start to the beginning of the box to avoid out of index error
+        if row_start <= 2:
+            row_start=0
+        elif row_start <= 5 and row_start >= 3:
+            row_start=3
+        elif row_start <= 8 and row_start >= 4:
+            row_start=6
+        if col_start <= 2:
+            col_start=0
+        elif col_start <= 5 and col_start >= 3:
+            col_start=3
+        elif col_start <= 8 and col_start >= 4:
+            col_start=6
+
+        # Then, check if the value is in the box (3x3)
         for i in range(3):
             for j in range(3):
                 if self.board[row_start + i][col_start + j] == num:
@@ -124,7 +140,7 @@ class SudokuGenerator:
     '''
 
     def is_valid(self, row, col, num):
-        if self.valid_in_row(row, num) == True and self.valid_in_col(col, num) == True:
+        if self.valid_in_row(row, num) == True and self.valid_in_col(col, num) == True and self.valid_in_box(row,col,num)==True:
             return True
         return False
 
@@ -140,6 +156,8 @@ class SudokuGenerator:
     '''
 
     def fill_box(self, row_start, col_start):
+
+        #Fill the boxes with random values without repeating any number
         digits = []
         counter = 0
         while counter != 3:
@@ -193,6 +211,7 @@ class SudokuGenerator:
     '''
 
     def fill_diagonal(self):
+        # This uses the fill_box method to fill the boxes on the diagonal
         self.fill_box(0, 0)
         self.fill_box(3, 3)
         self.fill_box(6, 6)
@@ -264,10 +283,18 @@ class SudokuGenerator:
     '''
 
     def remove_cells(self):
-        for x in range(self.removed_cells):
+        #Replace the digits with a 0, without repeating any cell
+        removed_cells = 0
+        while removed_cells != self.removed_cells:
             random1 = random.randint(0, 8)
             random2 = random.randint(0, 8)
-            self.board[random1][random2] = 0
+            if self.board[random1][random2] == 0:
+                continue
+            else:
+                self.board[random1][random2] = 0
+                removed_cells += 1
+
+
 
 
 '''
