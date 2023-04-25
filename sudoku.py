@@ -1,24 +1,6 @@
 import copy
 from sudoku_generator import SudokuGenerator, generate_sudoku
-
-# setting up pygame
-
 import pygame
-pygame.init()
-pygame.font.init()
-
-background_color = (251, 247, 245)
-original_grid_element_color = (52, 31, 151)
-
-
-WIDTH = 550
-HEIGHT = 550
-LINE_WIDTH = 15
-WIN_LINE_WIDTH = 15
-BG_COLOR = (255, 255, 245)
-LINE_COLOR = (245, 152, 66)
-
-WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 
 def draw_game_start(screen):
     # Initialize title font
@@ -67,21 +49,15 @@ def draw_game_start(screen):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if easy_rectangle.collidepoint(event.pos):
                     screen.fill(background_color)
-                    #return generate_sudoku(9, 30)
-                    #return draw_board(WIN, generate_sudoku(9, 40))
-                    sudoku = generate_sudoku(9,30)
-                    draw_board(WIN, sudoku)
+                    return generate_sudoku(9, 30)
 
                 elif medium_rectangle.collidepoint(event.pos):
                     screen.fill(background_color)
-                    #return generate_sudoku(9, 40)
-                    draw_board(WIN, generate_sudoku(9,40))
+                    return generate_sudoku(9, 40)
 
                 elif hard_rectangle.collidepoint(event.pos):
                     screen.fill(background_color)
-                    #return generate_sudoku(9, 50)
-                    draw_board(WIN, generate_sudoku(9,50))
-
+                    return generate_sudoku(9,50)
         pygame.display.update()
 
 
@@ -132,4 +108,26 @@ def draw_board(screen, sudoku): #def draw_board(screen, sudoku, solved, original
     exit_surface.fill(LINE_COLOR)
     exit_surface.blit(exit_button, (10, 10))
 
-draw_game_start(WIN)
+if __name__ == '__main__':
+    game_over = False
+
+    # setting up pygame
+    pygame.init()
+    pygame.font.init()
+
+    # main menu window
+    background_color = (251, 247, 245)
+    original_grid_element_color = (52, 31, 151)
+
+    WIDTH = 550
+    HEIGHT = 550
+    LINE_WIDTH = 15
+    WIN_LINE_WIDTH = 15
+    BG_COLOR = (255, 255, 245)
+    LINE_COLOR = (245, 152, 66)
+
+    WIN = pygame.display.set_mode((WIDTH, HEIGHT))
+
+    sudoku = draw_game_start(WIN)
+    while True:
+        draw_board(WIN, sudoku)
