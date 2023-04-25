@@ -1,6 +1,7 @@
 import copy
 from sudoku_generator import SudokuGenerator, generate_sudoku
 from cell import Cell
+from board import Board
 import pygame
 
 def draw_game_start(screen):
@@ -62,9 +63,9 @@ def draw_game_start(screen):
         pygame.display.update()
 
 
-def draw_board(screen, sudoku): #def draw_board(screen, sudoku, solved, original):
+def draw_board(screen, sudoku,): #def draw_board(screen, sudoku, solved, original):
     font = pygame.font.SysFont("arial", 35)
-
+    board = Board(500,500, WIN, "easy")
     for i in range(0, 10):
         pygame.draw.line(screen, (0, 0, 0), (50 + 50 * i, 50), (50 + 50 * i, 500), 2)  # draws all vertical lines
         pygame.draw.line(screen, (0, 0, 0), (50, 50 + 50 * i), (500, 50 + 50 * i), 2)  # draws all horizontal lines
@@ -92,12 +93,12 @@ def draw_board(screen, sudoku): #def draw_board(screen, sudoku, solved, original
     # Initialize buttons
     # Initialize text first
     button_font = pygame.font.SysFont("arial", 30) #changed font
-    reset_button = button_font.render("Reset", 0, (0,0,0))
-    restart_button = button_font.render("Restart", 0, (0,0,0))
-    exit_button = button_font.render("Exit", 0, (0,0,0))
+    reset_button = button_font.render("Reset", 0, (255,255,255))
+    restart_button = button_font.render("Restart", 0, (255,255,255))
+    exit_button = button_font.render("Exit", 0, (255,255,255))
 
     pygame.display.update()
-
+    #same process as menu, buttons for restart, reset, and exit
     reset_surface = pygame.Surface((reset_button.get_size()[0] + 15, reset_button.get_size()[1] + 15))
     reset_surface.fill(LINE_COLOR)
     reset_surface.blit(reset_button, (10, 10))
@@ -120,14 +121,17 @@ def draw_board(screen, sudoku): #def draw_board(screen, sudoku, solved, original
 
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONDOWN:
+
+            board.click(event.pos)
+
             if reset_rectangle.collidepoint(event.pos):
-                draw_board(WIN, generate_sudoku())
+                draw_board(WIN, generate_sudoku(9,30))
 
             elif restart_rectangle.collidepoint(event.pos):
-                print("restart")
+                draw_board(WIN, sudoku)
 
             elif exit_rectangle.collidepoint(event.pos):
-                print("exit")
+                exit()
 
 if __name__ == '__main__':
     game_over = False
@@ -148,7 +152,7 @@ if __name__ == '__main__':
     LINE_COLOR = (245, 152, 66)
 
     WIN = pygame.display.set_mode((WIDTH, HEIGHT))
-
     sudoku = draw_game_start(WIN)
+
     while True:
         draw_board(WIN, sudoku)

@@ -61,6 +61,7 @@ def draw_game_start(screen):
             if event.type == pygame.QUIT:
                 pygame.quit()
             if event.type == pygame.MOUSEBUTTONDOWN:
+                print(click(event.pos))
                 if easy_rectangle.collidepoint(event.pos):
                     screen.fill(background_color)
                     return generate_sudoku(9, 30)
