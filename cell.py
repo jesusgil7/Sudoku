@@ -1,3 +1,4 @@
+
 class Cell:
     def __init__(self, value, row, col, screen):
         self.value = value
@@ -12,4 +13,4 @@ class Cell:
         self.sketch_value = value
 
     def draw(self):
-        self.screen.blit(self.value, ((self.column + 1) * 50 + 15, (self.row + 1) * 50))
+        self.screen.blit(self.value, ((int(self.col) + 1) * 50 + 15, (int(self.row) + 1) * 50))

@@ -1,5 +1,6 @@
 import copy
 from sudoku_generator import SudokuGenerator, generate_sudoku
+from cell import Cell
 
 # setting up pygame
 
@@ -17,6 +18,9 @@ LINE_WIDTH = 15
 WIN_LINE_WIDTH = 15
 BG_COLOR = (255, 255, 245)
 LINE_COLOR = (245, 152, 66)
+WHITE = (255,255,255)
+BLACK = (0,0,0)
+
 
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 
@@ -35,9 +39,9 @@ def draw_game_start(screen):
 
     # Initialize buttons
     # Initialize text first
-    easy_button = button_font.render("Easy", 0, (255, 255, 255))
-    medium_button = button_font.render("Medium", 0, (255, 255, 255))
-    hard_button = button_font.render("Hard", 0, (255, 255, 255))
+    easy_button = button_font.render("Easy", 0, WHITE)
+    medium_button = button_font.render("Medium", 0, WHITE)
+    hard_button = button_font.render("Hard", 0, WHITE)
 
     # Initialize button background color and text
     easy_surface = pygame.Surface((easy_button.get_size()[0] + 20, easy_button.get_size()[1] + 20))
@@ -89,13 +93,14 @@ def draw_board(screen, sudoku): #def draw_board(screen, sudoku, solved, original
     font = pygame.font.SysFont("arial", 35)
 
     for i in range(0, 10):
-        pygame.draw.line(screen, (0, 0, 0), (50 + 50 * i, 50), (50 + 50 * i, 500), 2)  # draws all vertical lines
-        pygame.draw.line(screen, (0, 0, 0), (50, 50 + 50 * i), (500, 50 + 50 * i), 2)  # draws all horizontal lines
+        pygame.draw.line(screen, BLACK, (50 + 50 * i, 50), (50 + 50 * i, 500), 2)  # draws all vertical lines
+        pygame.draw.line(screen, BLACK, (50, 50 + 50 * i), (500, 50 + 50 * i), 2)  # draws all horizontal lines
 
         if i % 3 == 0:
-            pygame.draw.line(screen, (0, 0, 0), (50 + 50 * i, 50), (50 + 50 * i, 500), 4) #draws vertical bold lines surrounding 3x3 cell blocks
-            pygame.draw.line(screen, (0, 0, 0), (50, 50 + 50 * i), (500, 50 + 50 * i), 4) #draws horizontal bold lines surrounding 3x3 cell blocks
+            pygame.draw.line(screen, BLACK, (50 + 50 * i, 50), (50 + 50 * i, 500), 4) #draws vertical bold lines surrounding 3x3 cell blocks
+            pygame.draw.line(screen, BLACK, (50, 50 + 50 * i), (500, 50 + 50 * i), 4) #draws horizontal bold lines surrounding 3x3 cell blocks
     pygame.display.update()
+
 
 
     for x in range(0, len(sudoku[0])):                      #filla board with cells
