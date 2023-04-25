@@ -125,7 +125,7 @@ def draw_board(screen, sudoku,): #def draw_board(screen, sudoku, solved, origina
             board.click(event.pos)
 
             if reset_rectangle.collidepoint(event.pos):
-                pass
+                draw_board(WIN, sudoku)
 
 
             elif restart_rectangle.collidepoint(event.pos):
