@@ -1,5 +1,6 @@
 import copy
 from sudoku_generator import SudokuGenerator, generate_sudoku
+from cell import Cell
 import pygame
 
 def draw_game_start(screen):
@@ -73,28 +74,29 @@ def draw_board(screen, sudoku): #def draw_board(screen, sudoku, solved, original
             pygame.draw.line(screen, (0, 0, 0), (50, 50 + 50 * i), (500, 50 + 50 * i), 4) #draws horizontal bold lines surrounding 3x3 cell blocks
     pygame.display.update()
 
-
+    '''
     for x in range(0, len(sudoku[0])):                      #filla board with cells
         for j in range(0, len(sudoku[0])):
             if 0 < sudoku[x][j] < 10:
                 value = font.render(str(sudoku[x][j]), True, (0, 0, 0))
                 screen.blit(value, ((j + 1) * 50 + 15, (x + 1) * 50))
-
     '''
+
     for x in range(0, len(sudoku[0])):                      #filla board with cells
         for j in range(0, len(sudoku[0])):
             if 0 < sudoku[x][j] < 10:
                 cellobj = Cell(sudoku[x][j], x, j, WIN)
                 cellobj.draw()
     pygame.display.update()
-    '''
 
     # Initialize buttons
     # Initialize text first
     button_font = pygame.font.SysFont("arial", 30) #changed font
-    reset_button = button_font.render("Reset", 0, (255, 255, 255))
-    restart_button = button_font.render("Restart", 0, (255, 255, 255))
-    exit_button = button_font.render("Exit", 0, (255, 255, 255))
+    reset_button = button_font.render("Reset", 0, (0,0,0))
+    restart_button = button_font.render("Restart", 0, (0,0,0))
+    exit_button = button_font.render("Exit", 0, (0,0,0))
+
+    pygame.display.update()
 
     reset_surface = pygame.Surface((reset_button.get_size()[0] + 15, reset_button.get_size()[1] + 15))
     reset_surface.fill(LINE_COLOR)
@@ -107,6 +109,25 @@ def draw_board(screen, sudoku): #def draw_board(screen, sudoku, solved, original
     exit_surface = pygame.Surface((exit_button.get_size()[0] + 15, exit_button.get_size()[1] + 15))
     exit_surface.fill(LINE_COLOR)
     exit_surface.blit(exit_button, (10, 10))
+
+    reset_rectangle = reset_surface.get_rect(center=(125,525))
+    restart_rectangle = restart_surface.get_rect(center=(275, 525))
+    exit_rectangle = exit_surface.get_rect(center=(425,525))
+
+    screen.blit(reset_surface, reset_rectangle)
+    screen.blit(restart_surface, restart_rectangle)
+    screen.blit(exit_surface, exit_rectangle)
+
+    for event in pygame.event.get():
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if reset_rectangle.collidepoint(event.pos):
+                draw_board(WIN, generate_sudoku())
+
+            elif restart_rectangle.collidepoint(event.pos):
+                print("restart")
+
+            elif exit_rectangle.collidepoint(event.pos):
+                print("exit")
 
 if __name__ == '__main__':
     game_over = False
