@@ -4,9 +4,12 @@ from sudoku_generator import SudokuGenerator, generate_sudoku
 # setting up pygame
 
 import pygame
+pygame.init()
+pygame.font.init()
 
 background_color = (251, 247, 245)
 original_grid_element_color = (52, 31, 151)
+
 
 WIDTH = 550
 HEIGHT = 550
@@ -15,11 +18,12 @@ WIN_LINE_WIDTH = 15
 BG_COLOR = (255, 255, 245)
 LINE_COLOR = (245, 152, 66)
 
+WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 
 def draw_game_start(screen):
     # Initialize title font
-    start_title_font = pygame.font.Font(None, 100)
-    button_font = pygame.font.Font(None, 70)
+    start_title_font = pygame.font.SysFont("arial", 100)
+    button_font = pygame.font.SysFont("arial", 70)
 
     # Color background
     screen.fill(BG_COLOR)
@@ -63,37 +67,55 @@ def draw_game_start(screen):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if easy_rectangle.collidepoint(event.pos):
                     screen.fill(background_color)
-                    return generate_sudoku(9, 30)
+                    #return generate_sudoku(9, 30)
+                    #return draw_board(WIN, generate_sudoku(9, 40))
+                    sudoku = generate_sudoku(9,30)
+                    draw_board(WIN, sudoku)
+
                 elif medium_rectangle.collidepoint(event.pos):
                     screen.fill(background_color)
-                    return generate_sudoku(9, 40)
+                    #return generate_sudoku(9, 40)
+                    draw_board(WIN, generate_sudoku(9,40))
+
                 elif hard_rectangle.collidepoint(event.pos):
                     screen.fill(background_color)
-                    return generate_sudoku(9, 50)
+                    #return generate_sudoku(9, 50)
+                    draw_board(WIN, generate_sudoku(9,50))
+
         pygame.display.update()
 
 
-def draw_board(screen, sudoku, solved, original):
-    font = pygame.font.SysFont("Arial", 35)
+def draw_board(screen, sudoku): #def draw_board(screen, sudoku, solved, original):
+    font = pygame.font.SysFont("arial", 35)
 
     for i in range(0, 10):
+        pygame.draw.line(screen, (0, 0, 0), (50 + 50 * i, 50), (50 + 50 * i, 500), 2)  # draws all vertical lines
+        pygame.draw.line(screen, (0, 0, 0), (50, 50 + 50 * i), (500, 50 + 50 * i), 2)  # draws all horizontal lines
+
         if i % 3 == 0:
-            pygame.draw.line(screen, (0, 0, 0), (50 + 50 * i, 50), (50 + 50 * i, 500), 4)
-            pygame.draw.line(screen, (0, 0, 0), (50, 50 + 50 * i), (500, 50 + 50 * i), 4)
-        pygame.draw.line(screen, (0, 0, 0), (50 + 50 * i, 50), (50 + 50 * i, 500), 2)
-        pygame.draw.line(screen, (0, 0, 0), (50, 50 + 50 * i), (500, 50 + 50 * i), 2)
+            pygame.draw.line(screen, (0, 0, 0), (50 + 50 * i, 50), (50 + 50 * i, 500), 4) #draws vertical bold lines surrounding 3x3 cell blocks
+            pygame.draw.line(screen, (0, 0, 0), (50, 50 + 50 * i), (500, 50 + 50 * i), 4) #draws horizontal bold lines surrounding 3x3 cell blocks
     pygame.display.update()
 
-    for x in range(0, len(sudoku[0])):
+
+    for x in range(0, len(sudoku[0])):                      #filla board with cells
         for j in range(0, len(sudoku[0])):
             if 0 < sudoku[x][j] < 10:
                 value = font.render(str(sudoku[x][j]), True, (0, 0, 0))
                 screen.blit(value, ((j + 1) * 50 + 15, (x + 1) * 50))
+
+    '''
+    for x in range(0, len(sudoku[0])):                      #filla board with cells
+        for j in range(0, len(sudoku[0])):
+            if 0 < sudoku[x][j] < 10:
+                cellobj = Cell(sudoku[x][j], x, j, WIN)
+                cellobj.draw()
     pygame.display.update()
+    '''
 
     # Initialize buttons
     # Initialize text first
-    button_font = pygame.font.Font(None, 30)
+    button_font = pygame.font.SysFont("arial", 30) #changed font
     reset_button = button_font.render("Reset", 0, (255, 255, 255))
     restart_button = button_font.render("Restart", 0, (255, 255, 255))
     exit_button = button_font.render("Exit", 0, (255, 255, 255))
@@ -110,4 +132,4 @@ def draw_board(screen, sudoku, solved, original):
     exit_surface.fill(LINE_COLOR)
     exit_surface.blit(exit_button, (10, 10))
 
-
+draw_game_start(WIN)

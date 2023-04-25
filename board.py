@@ -34,4 +34,3 @@ class Board:
 
     def check_board(self):
         pass
-\
