@@ -48,27 +48,6 @@ def draw_game_start(screen):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-            if event.type == pygame.KEYDOWN:
-                key=False
-                if event.key == pygame.K_1:
-                    key=1
-                if event.key == pygame.K_2:
-                    key=2
-                if event.key == pygame.K_3:
-                    key = 3
-                if event.key == pygame.K_4:
-                    key=4
-                if event.key == pygame.K_5:
-                    key=5
-                if event.key == pygame.K_6:
-                    key=6
-                if event.key == pygame.K_7:
-                    key=7
-                if event.key == pygame.K_8:
-                    key=8
-                if event.key == pygame.K_9:
-                    key=9
-                print(key)
             if event.type == pygame.K_RETURN:
                 print(event)
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -121,6 +100,27 @@ def draw_board(screen, sudoku,): #def draw_board(screen, sudoku, solved, origina
     screen.blit(exit_surface, exit_rectangle)
 
     for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            key = False
+            if event.key == pygame.K_1:
+                key = 1
+            if event.key == pygame.K_2:
+                key = 2
+            if event.key == pygame.K_3:
+                key = 3
+            if event.key == pygame.K_4:
+                key = 4
+            if event.key == pygame.K_5:
+                key = 5
+            if event.key == pygame.K_6:
+                key = 6
+            if event.key == pygame.K_7:
+                key = 7
+            if event.key == pygame.K_8:
+                key = 8
+            if event.key == pygame.K_9:
+                key = 9
+            print(key)
         if event.type == pygame.MOUSEBUTTONDOWN:
 
             board.click(event.pos)
