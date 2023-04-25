@@ -48,6 +48,29 @@ def draw_game_start(screen):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+            if event.type == pygame.KEYDOWN:
+                key=False
+                if event.key == pygame.K_1:
+                    key=1
+                if event.key == pygame.K_2:
+                    key=2
+                if event.key == pygame.K_3:
+                    key = 3
+                if event.key == pygame.K_4:
+                    key=4
+                if event.key == pygame.K_5:
+                    key=5
+                if event.key == pygame.K_6:
+                    key=6
+                if event.key == pygame.K_7:
+                    key=7
+                if event.key == pygame.K_8:
+                    key=8
+                if event.key == pygame.K_9:
+                    key=9
+                print(key)
+            if event.type == pygame.K_RETURN:
+                print(event)
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if easy_rectangle.collidepoint(event.pos):
                     screen.fill(background_color)
@@ -65,30 +88,8 @@ def draw_game_start(screen):
 
 def draw_board(screen, sudoku,): #def draw_board(screen, sudoku, solved, original):
     font = pygame.font.SysFont("arial", 35)
-    board = Board(500,500, WIN, "easy")
-    for i in range(0, 10):
-        pygame.draw.line(screen, (0, 0, 0), (50 + 50 * i, 50), (50 + 50 * i, 500), 2)  # draws all vertical lines
-        pygame.draw.line(screen, (0, 0, 0), (50, 50 + 50 * i), (500, 50 + 50 * i), 2)  # draws all horizontal lines
-
-        if i % 3 == 0:
-            pygame.draw.line(screen, (0, 0, 0), (50 + 50 * i, 50), (50 + 50 * i, 500), 4) #draws vertical bold lines surrounding 3x3 cell blocks
-            pygame.draw.line(screen, (0, 0, 0), (50, 50 + 50 * i), (500, 50 + 50 * i), 4) #draws horizontal bold lines surrounding 3x3 cell blocks
-    pygame.display.update()
-
-    '''
-    for x in range(0, len(sudoku[0])):                      #filla board with cells
-        for j in range(0, len(sudoku[0])):
-            if 0 < sudoku[x][j] < 10:
-                value = font.render(str(sudoku[x][j]), True, (0, 0, 0))
-                screen.blit(value, ((j + 1) * 50 + 15, (x + 1) * 50))
-    '''
-
-    for x in range(0, len(sudoku[0])):                      #filla board with cells
-        for j in range(0, len(sudoku[0])):
-            if 0 < sudoku[x][j] < 10:
-                cellobj = Cell(sudoku[x][j], x, j, WIN)
-                cellobj.draw()
-    pygame.display.update()
+    board = Board(500,500, WIN, "easy",sudoku)
+    board.draw()
 
     # Initialize buttons
     # Initialize text first
@@ -96,8 +97,8 @@ def draw_board(screen, sudoku,): #def draw_board(screen, sudoku, solved, origina
     reset_button = button_font.render("Reset", 0, (255,255,255))
     restart_button = button_font.render("Restart", 0, (255,255,255))
     exit_button = button_font.render("Exit", 0, (255,255,255))
-
     pygame.display.update()
+
     #same process as menu, buttons for restart, reset, and exit
     reset_surface = pygame.Surface((reset_button.get_size()[0] + 15, reset_button.get_size()[1] + 15))
     reset_surface.fill(LINE_COLOR)
