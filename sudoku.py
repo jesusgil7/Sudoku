@@ -125,13 +125,14 @@ def draw_board(screen, sudoku,): #def draw_board(screen, sudoku, solved, origina
             board.click(event.pos)
 
             if reset_rectangle.collidepoint(event.pos):
-                draw_board(WIN, generate_sudoku(9,30))
+                pass
+
 
             elif restart_rectangle.collidepoint(event.pos):
-                draw_board(WIN, sudoku)
+                return False
 
             elif exit_rectangle.collidepoint(event.pos):
-                exit()
+                pygame.quit()
 
 if __name__ == '__main__':
     game_over = False
@@ -155,4 +156,5 @@ if __name__ == '__main__':
     sudoku = draw_game_start(WIN)
 
     while True:
-        draw_board(WIN, sudoku)
+        if draw_board(WIN, sudoku) == False:
+            sudoku = draw_game_start(WIN)
