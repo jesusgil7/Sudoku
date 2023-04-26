@@ -7,15 +7,23 @@ class Cell:
         self.row = row
         self.col = col
         self.screen = screen
+        self.sketch_value = 0
 
     def set_cell_value(self, value):
         self.value = value
 
-    def set_sketch_value(self,value):
+    def set_sketch_value(self, value):
         self.sketch_value = value
 
     def draw(self):
-        chip_font = pygame.font.Font(None, 50)
-        chip = chip_font.render(str(self.value), True, (0, 0, 0))
-        chip_rect = chip.get_rect(center = (self.col * 50 + 150 //2, self.row * 50 + 150 //2))
-        self.screen.blit(chip, chip_rect)
+        value_font = pygame.font.Font(None, 50)
+        sketch_font = pygame.font.Font(None, 20)
+        value = value_font.render(str(self.value), True, (0, 0, 0))
+        sketch = sketch_font.render(str(self.sketch_value), True, (0, 0, 0))
+        sketch.set_alpha(150)
+        value_rect = value.get_rect(center = (self.col * 50 + 150 //2, self.row * 50 + 150 //2))
+        sketch_rect = sketch.get_rect(center = (self.row * 50 + 120 // 2, self.col * 50 + 120 // 2))
+        if self.value != 0:
+            self.screen.blit(value, value_rect)
+        if self.sketch_value != 0:
+            self.screen.blit(sketch, sketch_rect)

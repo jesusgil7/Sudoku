@@ -120,7 +120,8 @@ def draw_board(screen, sudoku, board): #def draw_board(screen, sudoku, solved, o
             if event.key == pygame.K_9:
                 key = 9
             print(key)
-            board.place_number(key)
+            #if event.key == pygame.K_RETURN:
+            board.sketch(key)
             board.draw()
             
         elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -135,11 +136,7 @@ def draw_board(screen, sudoku, board): #def draw_board(screen, sudoku, solved, o
 
             elif exit_rectangle.collidepoint(event.pos):
                 pygame.quit()
-            
-        
-            
 
-        
 
 if __name__ == '__main__':
     game_over = False
