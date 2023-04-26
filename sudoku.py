@@ -101,39 +101,37 @@ def draw_board(screen, sudoku, board): #def draw_board(screen, sudoku, solved, o
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             key = False
-            if event.key == pygame.K_1:
+            if event.key == pygame.K_RETURN:
+                board.place_number()
+                board.draw()
+                break
+            elif event.key == pygame.K_1:
                 key = 1
-            if event.key == pygame.K_2:
+            elif event.key == pygame.K_2:
                 key = 2
-            if event.key == pygame.K_3:
+            elif event.key == pygame.K_3:
                 key = 3
-            if event.key == pygame.K_4:
+            elif event.key == pygame.K_4:
                 key = 4
-            if event.key == pygame.K_5:
+            elif event.key == pygame.K_5:
                 key = 5
-            if event.key == pygame.K_6:
+            elif event.key == pygame.K_6:
                 key = 6
-            if event.key == pygame.K_7:
+            elif event.key == pygame.K_7:
                 key = 7
-            if event.key == pygame.K_8:
+            elif event.key == pygame.K_8:
                 key = 8
-            if event.key == pygame.K_9:
+            elif event.key == pygame.K_9:
                 key = 9
 
             board.sketch(key)
             board.draw()
-
-            #if event.key == pygame.K_RETURN:
-
-                #board.place_number(key)
-                #board.draw()
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             board.click(event.pos)
 
             if reset_rectangle.collidepoint(event.pos):
                 draw_board(WIN, sudoku, board)
-
 
             elif restart_rectangle.collidepoint(event.pos):
                 return False
