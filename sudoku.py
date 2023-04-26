@@ -4,6 +4,15 @@ from cell import Cell
 from board import Board
 import pygame
 
+
+def win_game_screen(screen):
+    pass
+
+def lose_game_screen(screen):
+    pass
+
+
+
 def draw_game_start(screen):
     # Initialize title font
     start_title_font = pygame.font.SysFont("arial", 100)
@@ -53,15 +62,25 @@ def draw_game_start(screen):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if easy_rectangle.collidepoint(event.pos):
                     screen.fill(background_color)
-                    return generate_sudoku(9, 30)
+                    sudokuobj = SudokuGenerator(9 , 1)
+                    sudokuobj.fill_values()
+                    solved_sudoku = sudokuobj
+                    return(solved_sudoku)
 
                 elif medium_rectangle.collidepoint(event.pos):
                     screen.fill(background_color)
-                    return generate_sudoku(9, 40)
+                    sudokuobj = SudokuGenerator(9, 40)
+                    sudokuobj.fill_values()
+                    solved_sudoku = sudokuobj
+                    return (solved_sudoku)
 
                 elif hard_rectangle.collidepoint(event.pos):
                     screen.fill(background_color)
-                    return generate_sudoku(9,50)
+                    sudokuobj = SudokuGenerator(9, 50)
+                    sudokuobj.fill_values()
+                    solved_sudoku = sudokuobj
+                    return (solved_sudoku)
+
         pygame.display.update()
 
 
@@ -104,6 +123,8 @@ def draw_board(screen, sudoku, board): #def draw_board(screen, sudoku, solved, o
             if event.key == pygame.K_RETURN:
                 board.place_number()
                 board.draw()
+                if board.is_full() == True:
+                    board.check_board()
                 break
             elif event.key == pygame.K_1:
                 key = 1
@@ -139,7 +160,6 @@ def draw_board(screen, sudoku, board): #def draw_board(screen, sudoku, solved, o
             board.click(event.pos)
         pygame.display.update()
 
-
 if __name__ == '__main__':
     game_over = False
 
@@ -159,18 +179,28 @@ if __name__ == '__main__':
     LINE_COLOR = (245, 152, 66)
 
     WIN = pygame.display.set_mode((WIDTH, HEIGHT))
-    sudoku = draw_game_start(WIN)
+
+    solved_boardojb = draw_game_start(WIN)
+    solved_deepcopy = copy.deepcopy(solved_boardojb)
+    solved_board = solved_boardojb.get_board()
+    solved_deepcopy.remove_cells()
+    player_board = solved_deepcopy.get_board()
 
     selected_cell = []
-    board = Board(500,500, WIN,sudoku)
+    board = Board(500,500, WIN, player_board, solved_board)
 
     while not game_over:
-        if draw_board(WIN, sudoku, board) == True:
+        if draw_board(WIN, player_board, board) == True:
             WIN.fill(background_color)
             pygame.display.update()
-            board = Board(500, 500, WIN, sudoku)
-        elif draw_board(WIN, sudoku, board) == False:
-            sudoku = draw_game_start(WIN)
-            board = Board(500, 500, WIN, sudoku)
+            board = Board(500, 500, WIN, player_board , solved_board)
+        elif draw_board(WIN, player_board, board) == False:
+            solved_boardojb = draw_game_start(WIN)
+            solved_deepcopy = copy.deepcopy(solved_boardojb)
+            solved_board = solved_boardojb.get_board()
+            solved_deepcopy.remove_cells()
+            player_board = solved_deepcopy.get_board()
+
+            board = Board(500, 500, WIN, player_board, solved_board)
 
 

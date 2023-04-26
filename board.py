@@ -2,13 +2,14 @@ from cell import Cell
 import pygame
 pygame.init()
 class Board:
-    def __init__(self, width, height, screen, sudoku):
+    def __init__(self, width, height, screen, sudoku, solved_board):
         self.width = width
         self.height = height
         self.screen = screen
         self.board = self.initialize_board()
         self.sudoku = sudoku
         self.selected_cell = []
+        self.solved_board = solved_board
         self.cells = [[Cell(self.sudoku[row][col], row, col, self.screen) for row in range(0, len(self.sudoku[0]))] for col in range(0, len(self.sudoku[0]))]
 
 
@@ -68,15 +69,23 @@ class Board:
 
     def place_number(self):
         sketch_value = self.cells[self.selected_cell[0]][self.selected_cell[1]].get_sketch_value()
-        print(sketch_value)
         self.cells[self.selected_cell[1]][self.selected_cell[0]].set_cell_value(sketch_value)
         self.sketch(0)
+        sketch_value = 0
         self.cells[self.selected_cell[0]][self.selected_cell[1]].draw()
     def reset_to_original(self):
         pass
 
     def is_full(self):
-        pass
+        counter = 0
+        for row in range (0,9):
+            for col in range (0,9):
+                if self.cells[row][col].get_cell_value() == 0:
+                    counter +=1
+        if counter != 0:
+            return False
+        if counter == 0:
+            return True
 
     def updated_board(self):
         pass
@@ -84,4 +93,13 @@ class Board:
         pass
 
     def check_board(self):
-        pass
+        for row in range(0, 9):
+            for col in range(0, 9):
+                if self.cells[row][col].get_cell_value() != self.solved_board[col][row]:
+                    print(row, col)
+                    print(self.cells[row][col].get_cell_value(), self.solved_board[col][row])
+                    print("You Lose")
+                    return False
+        else:
+            print("You Win")
+            return True

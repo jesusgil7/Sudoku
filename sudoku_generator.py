@@ -322,3 +322,5 @@ def generate_sudoku(size, removed):
     board = sudoku.get_board()
     return board
 
+
+
