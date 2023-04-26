@@ -28,12 +28,12 @@ class Board:
                                  4)  # draws horizontal bold lines surrounding 3x3 cell blocks
         pygame.display.update()
 
-        for row in range(0, len(self.sudoku[0])):  # filla board with cells
+        for row in range(0, len(self.sudoku[0])):  # fill a board with cells
             for col in range(0, len(self.sudoku[0])):
                 #if 0 < self.sudoku[col][row] < 10:
                     self.cells[row][col].draw()
         pygame.display.update()
-        
+
     def select(self, row, col):
         self.screen.fill((255,255,255))
 
@@ -58,11 +58,8 @@ class Board:
             while y > 100:
                 y -= 50
                 row+=1
-        if self.sudoku[row][col] == 0:
-            print(row, col)
-            print(self.selected_cell)
+        if self.cells[col][row].get_cell_value() == 0:
             self.selected_cell = [row, col]
-            print(self.selected_cell)
             self.select(row, col)
 
     def clear(self):
@@ -72,13 +69,9 @@ class Board:
         self.cells[self.selected_cell[0]][self.selected_cell[1]].set_sketch_value(value)
         self.cells[self.selected_cell[0]][self.selected_cell[1]].draw()
 
-    def place_number(self):
-        pass
-
     def place_number(self, value):
-        self.sudoku[self.selected_cell[0]][self.selected_cell[1]] = value
-        pass
-        
+        self.cells[self.selected_cell[1]][self.selected_cell[0]].set_cell_value(value)
+        self.cells[self.selected_cell[0]][self.selected_cell[1]].draw()
     def reset_to_original(self):
         pass
 

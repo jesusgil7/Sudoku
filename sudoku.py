@@ -119,16 +119,20 @@ def draw_board(screen, sudoku, board): #def draw_board(screen, sudoku, solved, o
                 key = 8
             if event.key == pygame.K_9:
                 key = 9
-            print(key)
-            #if event.key == pygame.K_RETURN:
+
             board.sketch(key)
             board.draw()
-            
+
+            #if event.key == pygame.K_RETURN:
+
+                #board.place_number(key)
+                #board.draw()
+
         elif event.type == pygame.MOUSEBUTTONDOWN:
             board.click(event.pos)
 
             if reset_rectangle.collidepoint(event.pos):
-                draw_board(WIN, sudoku)
+                draw_board(WIN, sudoku, board)
 
 
             elif restart_rectangle.collidepoint(event.pos):
@@ -158,7 +162,7 @@ if __name__ == '__main__':
 
     WIN = pygame.display.set_mode((WIDTH, HEIGHT))
     sudoku = draw_game_start(WIN)
-    
+
     selected_cell = []
     board = Board(500,500, WIN, "easy",sudoku)
 
