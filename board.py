@@ -29,7 +29,6 @@ class Board:
 
         for row in range(0, len(self.sudoku[0])):  # fill a board with cells
             for col in range(0, len(self.sudoku[0])):
-                #if 0 < self.sudoku[col][row] < 10:
                     self.cells[row][col].draw()
         pygame.display.update()
 
@@ -42,7 +41,6 @@ class Board:
         cell_rectangle = cell_surface.get_rect(center=(col*50+75,row*50+75))
         self.screen.blit(cell_surface,cell_rectangle)
 
-        #cellobj.set_cell_value(key)
     def click(self, pos):
         x = pos[0]
         y = pos[1]
