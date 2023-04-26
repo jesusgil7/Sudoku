@@ -121,6 +121,7 @@ def draw_board(screen, sudoku,): #def draw_board(screen, sudoku, solved, origina
             if event.key == pygame.K_9:
                 key = 9
             print(key)
+
         if event.type == pygame.MOUSEBUTTONDOWN:
 
             board.click(event.pos)
