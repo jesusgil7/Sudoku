@@ -40,7 +40,7 @@ class Board:
         cell_surface = pygame.Surface((50, 50))
         cell_surface.fill((135,206,250))
         cell_surface.set_alpha(150)
-        cell_rectangle = cell_surface.get_rect(center=(row*50+75,col*50+75))
+        cell_rectangle = cell_surface.get_rect(center=(col*50+75,row*50+75))
         self.screen.blit(cell_surface,cell_rectangle)
 
         #cellobj.set_cell_value(key)
