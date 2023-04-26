@@ -2,7 +2,7 @@ import pygame
 
 
 class Cell:
-    def __init__(self, value, row, col, screen):
+    def __init__(self, value, row, col, screen):            #initialized self cell values
         self.value = value
         self.row = row
         self.col = col
@@ -21,7 +21,7 @@ class Cell:
     def get_sketch_value(self):
         return self.sketch_value
 
-    def draw(self):
+    def draw(self):                                         #has two different fonds and properties for sketch value and actual value
         value_font = pygame.font.Font(None, 50)
         sketch_font = pygame.font.Font(None, 20)
         value = value_font.render(str(self.value), True, (0, 0, 0))

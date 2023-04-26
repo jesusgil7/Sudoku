@@ -2,19 +2,15 @@ from cell import Cell
 import pygame
 pygame.init()
 class Board:
-    def __init__(self, width, height, screen, sudoku, solved_board):
+    def __init__(self, width, height, screen, sudoku, solved_board):                        #sets self values
         self.width = width
         self.height = height
         self.screen = screen
-        self.board = self.initialize_board()
         self.sudoku = sudoku
         self.selected_cell = []
         self.solved_board = solved_board
         self.cells = [[Cell(self.sudoku[row][col], row, col, self.screen) for row in range(0, len(self.sudoku[0]))] for col in range(0, len(self.sudoku[0]))]
 
-
-    def initialize_board(self):
-        return [["-" for i in range(3)] for j in range(3)]
 
     def draw(self):
         for i in range(0, 10):
@@ -60,9 +56,6 @@ class Board:
             self.selected_cell = [row, col]
             self.select(row, col)
 
-    def clear(self):
-        pass
-
     def sketch(self, value):
         self.cells[self.selected_cell[0]][self.selected_cell[1]].set_sketch_value(value)
         self.cells[self.selected_cell[0]][self.selected_cell[1]].draw()
@@ -71,7 +64,6 @@ class Board:
         sketch_value = self.cells[self.selected_cell[0]][self.selected_cell[1]].get_sketch_value()
         self.cells[self.selected_cell[1]][self.selected_cell[0]].set_cell_value(sketch_value)
         self.sketch(0)
-        sketch_value = 0
         self.cells[self.selected_cell[0]][self.selected_cell[1]].draw()
     def reset_to_original(self):
         pass
@@ -86,11 +78,6 @@ class Board:
             return False
         if counter == 0:
             return True
-
-    def updated_board(self):
-        pass
-    def find_empty(self):
-        pass
 
     def check_board(self):
         for row in range(0, 9):

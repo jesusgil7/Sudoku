@@ -1,15 +1,13 @@
 import copy
-from sudoku_generator import SudokuGenerator, generate_sudoku
-from cell import Cell
+from sudoku_generator import SudokuGenerator
 from board import Board
 import pygame
 
 
 def win_game_screen(screen):
     start_title_font = pygame.font.SysFont("arial", 100)
-    button_font = pygame.font.SysFont("arial", 70)
 
-    WIN.fill(BG_COLOR)
+    WIN.fill((BG_COLOR))
     pygame.display.update()
 
     title_surface = start_title_font.render("You Win!", 0, LINE_COLOR)
@@ -19,7 +17,6 @@ def win_game_screen(screen):
     pygame.display.update()
 def lose_game_screen(screen):
     start_title_font = pygame.font.SysFont("arial", 100)
-    button_font = pygame.font.SysFont("arial", 70)
 
     screen.fill(BG_COLOR)
     pygame.display.update()
@@ -134,11 +131,26 @@ def draw_board(screen, sudoku, board): #def draw_board(screen, sudoku, solved, o
     screen.blit(exit_surface, exit_rectangle)
 
     for event in pygame.event.get():
-        if event.type == pygame.KEYDOWN:
+
+        if event.type == pygame.MOUSEBUTTONDOWN:                        #checks to see if the mouse click was on one of the sudoku buttons, and if so, resets, restarts, or exits
+            if reset_rectangle.collidepoint(event.pos):
+                return True
+
+            elif restart_rectangle.collidepoint(event.pos):
+                return False
+
+            elif exit_rectangle.collidepoint(event.pos):
+                exit()
+            board.click(event.pos)
+        pygame.display.update()
+
+        if event.type == pygame.KEYDOWN:                                #checks to see if a key was pressed, if return, then places sketched key
             key = False
             if event.key == pygame.K_RETURN:
+                if board.selected_cell == []:
+                    break
                 board.place_number()
-                board.draw()
+                board.draw()                                            #checks to see if board is filled, if so, checks win or loss, displays screen
                 if board.is_full() == True:
                     if board.check_board() == True:
                         win_game_screen(WIN)
@@ -146,7 +158,7 @@ def draw_board(screen, sudoku, board): #def draw_board(screen, sudoku, solved, o
                         lose_game_screen(WIN)
                         return
                 break
-            elif event.key == pygame.K_1:
+            elif event.key == pygame.K_1:                               #if the pressed key is an integer, then it sketches that number
                 key = 1
             elif event.key == pygame.K_2:
                 key = 2
@@ -168,16 +180,7 @@ def draw_board(screen, sudoku, board): #def draw_board(screen, sudoku, solved, o
             board.sketch(key)
             board.draw()
 
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if reset_rectangle.collidepoint(event.pos):
-                return True
 
-            elif restart_rectangle.collidepoint(event.pos):
-                return False
-
-            elif exit_rectangle.collidepoint(event.pos):
-                exit()
-            board.click(event.pos)
         pygame.display.update()
 
 if __name__ == '__main__':
@@ -200,7 +203,7 @@ if __name__ == '__main__':
 
     WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 
-    solved_boardojb = draw_game_start(WIN)
+    solved_boardojb = draw_game_start(WIN)                          #gets object from sudoku_generator through draw_game_start, creates the player board and solved board
     solved_deepcopy = copy.deepcopy(solved_boardojb)
     solved_board = solved_boardojb.get_board()
     solved_deepcopy.remove_cells()
@@ -210,7 +213,7 @@ if __name__ == '__main__':
     board = Board(500,500, WIN, player_board, solved_board)
 
     while not game_over:
-        if draw_board(WIN, player_board, board) == True:
+        if draw_board(WIN, player_board, board) == True:            #reset and restart commands
             WIN.fill(background_color)
             pygame.display.update()
             board = Board(500, 500, WIN, player_board , solved_board)
