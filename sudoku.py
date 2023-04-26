@@ -127,9 +127,7 @@ def draw_board(screen, sudoku, board): #def draw_board(screen, sudoku, solved, o
             board.sketch(key)
             board.draw()
 
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            board.click(event.pos)
-
+        if event.type == pygame.MOUSEBUTTONDOWN:
             if reset_rectangle.collidepoint(event.pos):
                 return True
 
@@ -138,6 +136,7 @@ def draw_board(screen, sudoku, board): #def draw_board(screen, sudoku, solved, o
 
             elif exit_rectangle.collidepoint(event.pos):
                 exit()
+            board.click(event.pos)
         pygame.display.update()
 
 
@@ -166,10 +165,12 @@ if __name__ == '__main__':
     board = Board(500,500, WIN,sudoku)
 
     while not game_over:
-        if draw_board(WIN, sudoku, board) == False:
-            sudoku = draw_game_start(WIN)
-            board = Board(500, 500, WIN, sudoku)
         if draw_board(WIN, sudoku, board) == True:
             WIN.fill(background_color)
             pygame.display.update()
             board = Board(500, 500, WIN, sudoku)
+        elif draw_board(WIN, sudoku, board) == False:
+            sudoku = draw_game_start(WIN)
+            board = Board(500, 500, WIN, sudoku)
+
+
