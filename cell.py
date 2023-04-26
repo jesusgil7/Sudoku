@@ -17,5 +17,5 @@ class Cell:
     def draw(self):
         chip_font = pygame.font.Font(None, 50)
         chip = chip_font.render(str(self.value), True, (0, 0, 0))
-        chip_rect = chip.get_rect(center = (self.col * 50 + 150 //2, self.row * 50 + 150 /2))
+        chip_rect = chip.get_rect(center = (self.col * 50 + 150 //2, self.row * 50 + 150 //2))
         self.screen.blit(chip, chip_rect)

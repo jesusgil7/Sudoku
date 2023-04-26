@@ -42,8 +42,8 @@ class Board:
         cell_surface.set_alpha(150)
         cell_rectangle = cell_surface.get_rect(center=(col*50+75,row*50+75))
         self.screen.blit(cell_surface,cell_rectangle)
+        print(self.sudoku[self.selected_cell[0]][self.selected_cell[1]])
 
-        #cellobj.set_cell_value(key)
     def click(self, pos):
         x = pos[0]
         y = pos[1]
@@ -58,24 +58,18 @@ class Board:
             while y > 100:
                 y -= 50
                 row+=1
-        print(row, col)
-        print(self.selected_cell)
         self.selected_cell = [row, col]
-        print(self.selected_cell)
         self.select(row,col)
 
     def clear(self):
         pass
 
-    def sketch(self):
-        pass
-
-    def place_number(self):
-        pass
+    def sketch(self,value):
+        self.sudoku[self.selected_cell[0]][self.selected_cell[1]] = value
 
     def place_number(self, value):
         self.sudoku[self.selected_cell[0]][self.selected_cell[1]] = value
-        
+
     def reset_to_original(self):
         pass
 
