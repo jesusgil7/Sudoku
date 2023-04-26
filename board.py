@@ -29,7 +29,7 @@ class Board:
 
         for row in range(0, len(self.sudoku[0])):  # filla board with cells
             for col in range(0, len(self.sudoku[0])):
-                if 0 < self.sudoku[row][col] < 10:
+                #if 0 < self.sudoku[col][row] < 10:
                     self.cells[row][col].draw()
         pygame.display.update()
         
