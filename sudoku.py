@@ -69,13 +69,13 @@ def draw_game_start(screen):
     screen.blit(hard_surface, hard_rectangle)
 
     while True:
-        for event in pygame.event.get():
+        for event in pygame.event.get():                                #generates board object based on difficulty mode
             if event.type == pygame.QUIT:
                 pygame.quit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if easy_rectangle.collidepoint(event.pos):
                     screen.fill(background_color)
-                    sudokuobj = SudokuGenerator(9 , 1)
+                    sudokuobj = SudokuGenerator(9 , 30)
                     sudokuobj.fill_values()
                     solved_sudoku = sudokuobj
                     return(solved_sudoku)
