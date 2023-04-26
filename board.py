@@ -2,11 +2,10 @@ from cell import Cell
 import pygame
 pygame.init()
 class Board:
-    def __init__(self, width, height, screen, difficulty, sudoku):
+    def __init__(self, width, height, screen, sudoku):
         self.width = width
         self.height = height
         self.screen = screen
-        self.difficulty = difficulty
         self.board = self.initialize_board()
         self.sudoku = sudoku
         self.selected_cell = []
@@ -69,8 +68,11 @@ class Board:
         self.cells[self.selected_cell[0]][self.selected_cell[1]].set_sketch_value(value)
         self.cells[self.selected_cell[0]][self.selected_cell[1]].draw()
 
-    def place_number(self, value):
-        self.cells[self.selected_cell[1]][self.selected_cell[0]].set_cell_value(value)
+    def place_number(self):
+        sketch_value = self.cells[self.selected_cell[0]][self.selected_cell[1]].get_sketch_value()
+        print(sketch_value)
+        self.cells[self.selected_cell[1]][self.selected_cell[0]].set_cell_value(sketch_value)
+        self.sketch(0)
         self.cells[self.selected_cell[0]][self.selected_cell[1]].draw()
     def reset_to_original(self):
         pass
