@@ -20,7 +20,6 @@ class Cell:
         sketch_font = pygame.font.Font(None, 20)
         value = value_font.render(str(self.value), True, (0, 0, 0))
         sketch = sketch_font.render(str(self.sketch_value), True, (0, 0, 0))
-        sketch.set_alpha(150)
         value_rect = value.get_rect(center = (self.col * 50 + 150 //2, self.row * 50 + 150 //2))
         sketch_rect = sketch.get_rect(center = (self.row * 50 + 120 // 2, self.col * 50 + 120 // 2))
         if self.value != 0:
