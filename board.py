@@ -96,10 +96,6 @@ class Board:
         for row in range(0, 9):
             for col in range(0, 9):
                 if self.cells[row][col].get_cell_value() != self.solved_board[col][row]:
-                    print(row, col)
-                    print(self.cells[row][col].get_cell_value(), self.solved_board[col][row])
-                    print("You Lose")
                     return False
         else:
-            print("You Win")
             return True

@@ -6,11 +6,29 @@ import pygame
 
 
 def win_game_screen(screen):
-    pass
+    start_title_font = pygame.font.SysFont("arial", 100)
+    button_font = pygame.font.SysFont("arial", 70)
 
+    WIN.fill(BG_COLOR)
+    pygame.display.update()
+
+    title_surface = start_title_font.render("You Win!", 0, LINE_COLOR)
+    title_rectangle = title_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 150))
+    screen.blit(title_surface, title_rectangle)
+
+    pygame.display.update()
 def lose_game_screen(screen):
-    pass
+    start_title_font = pygame.font.SysFont("arial", 100)
+    button_font = pygame.font.SysFont("arial", 70)
 
+    screen.fill(BG_COLOR)
+    pygame.display.update()
+
+    title_surface = start_title_font.render("You Lose!", 0, LINE_COLOR)
+    title_rectangle = title_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 150))
+    screen.blit(title_surface, title_rectangle)
+
+    pygame.display.update()
 
 
 def draw_game_start(screen):
@@ -57,8 +75,6 @@ def draw_game_start(screen):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-            if event.type == pygame.K_RETURN:
-                print(event)
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if easy_rectangle.collidepoint(event.pos):
                     screen.fill(background_color)
@@ -124,7 +140,11 @@ def draw_board(screen, sudoku, board): #def draw_board(screen, sudoku, solved, o
                 board.place_number()
                 board.draw()
                 if board.is_full() == True:
-                    board.check_board()
+                    if board.check_board() == True:
+                        win_game_screen(WIN)
+                    if board.check_board() == False:
+                        lose_game_screen(WIN)
+                        return
                 break
             elif event.key == pygame.K_1:
                 key = 1
