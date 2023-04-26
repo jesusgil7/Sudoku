@@ -65,9 +65,8 @@ def draw_game_start(screen):
         pygame.display.update()
 
 
-def draw_board(screen, sudoku,): #def draw_board(screen, sudoku, solved, original):
+def draw_board(screen, sudoku, board): #def draw_board(screen, sudoku, solved, original):
     font = pygame.font.SysFont("arial", 35)
-    board = Board(500,500, WIN, "easy",sudoku)
     board.draw()
 
     # Initialize buttons
@@ -121,8 +120,10 @@ def draw_board(screen, sudoku,): #def draw_board(screen, sudoku, solved, origina
             if event.key == pygame.K_9:
                 key = 9
             print(key)
-        if event.type == pygame.MOUSEBUTTONDOWN:
-
+            board.place_number(key)
+            board.draw()
+            
+        elif event.type == pygame.MOUSEBUTTONDOWN:
             board.click(event.pos)
 
             if reset_rectangle.collidepoint(event.pos):
@@ -134,6 +135,11 @@ def draw_board(screen, sudoku,): #def draw_board(screen, sudoku, solved, origina
 
             elif exit_rectangle.collidepoint(event.pos):
                 pygame.quit()
+            
+        
+            
+
+        
 
 if __name__ == '__main__':
     game_over = False
@@ -155,7 +161,10 @@ if __name__ == '__main__':
 
     WIN = pygame.display.set_mode((WIDTH, HEIGHT))
     sudoku = draw_game_start(WIN)
+    
+    selected_cell = []
+    board = Board(500,500, WIN, "easy",sudoku)
 
-    while True:
-        if draw_board(WIN, sudoku) == False:
+    while not game_over:
+        if draw_board(WIN, sudoku, board) == False:
             sudoku = draw_game_start(WIN)
